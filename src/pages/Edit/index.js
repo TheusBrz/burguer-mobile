@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  Alert, View, Text, TouchableOpacity, Platform, Dimensions, StatusBar,
+  Alert, View, TouchableOpacity, Platform, Dimensions, StatusBar,
 } from 'react-native';
 
 import { connect } from 'react-redux';
