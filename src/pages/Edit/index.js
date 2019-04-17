@@ -173,7 +173,7 @@ class Edit extends Component {
             }
           }
         >
-          <FinishText>Finalizar Edição</FinishText>
+          <FinishText>FINALIZAR EDIÇÃO</FinishText>
         </Finish>
 
         <Modal

@@ -7,6 +7,11 @@ import { PacmanIndicator } from 'react-native-indicators';
 import { colors } from '~/styles';
 import { Loading, Logo, Version } from './styles';
 
+/**
+ * Essa página pode ser utilizada para quaisquer
+ * funcionalidades do começo da aplicação
+ * carrengando informações do banco ou API
+ */
 class Start extends Component {
   componentDidMount() {
     setTimeout(() => {
@@ -31,7 +36,7 @@ class Start extends Component {
 
         <Version>Versão: 1.0.0</Version>
 
-        <PacmanIndicator style={{ flex: 0 }} color={colors.white} size={50} />
+        <PacmanIndicator style={{ flex: 0 }} color={colors.option} size={50} />
       </Loading>
     );
   }

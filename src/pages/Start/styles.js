@@ -10,14 +10,14 @@ export const Loading = styled.View`
 
 export const Logo = styled.Text`
   text-align: center;
-  color:${colors.white};
+  color:${colors.option};
   font-weight: bold;
   font-size: 60;
   margin: 80px 0px;
 `;
 
 export const Version = styled.Text`
-  color: ${colors.white};
+  color: ${colors.option};
   font-size: 20;
   margin: 0 0 20px 0;
 `;

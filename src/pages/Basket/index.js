@@ -148,7 +148,7 @@ class Basket extends Component {
               : () => { Alert.alert('Pedido concluído!', `Seu pedido ficou com um total de R$ ${basketTotal.total}`); }
           }
         >
-          <FinishText>FINALIZAR</FinishText>
+          <FinishText>FINALIZAR PEDIDO</FinishText>
         </Finish>
       </Container>
     );
