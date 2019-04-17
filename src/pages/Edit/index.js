@@ -29,6 +29,9 @@ import {
   Action, ActionText,
   Separator,
 
+  Option,
+  OptionText,
+
   Finish, FinishText,
 } from '~/styles/general';
 
@@ -178,31 +181,36 @@ class Edit extends Component {
           deviceWidth={deviceWidth}
           deviceHeight={deviceHeight}
         >
-          <View style={{
-            flex: 1,
-            alignItems: 'center',
-            justifyContent: 'center',
-            backgroundColor: colors.white,
-          }}
+          <View
+            style={{
+              flex: 1,
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: colors.background,
+            }}
           >
             {more.map(ing => (
-              <TouchableOpacity
+              <React.Fragment
                 key={ing.id}
-                onPress={() => {
-                  addOne(ing);
-                  this.toggleModal();
-                }}
               >
-                <Text>{ing.name}</Text>
-              </TouchableOpacity>
+                <Option
+                  onPress={() => {
+                    addOne(ing);
+                    this.toggleModal();
+                  }}
+                >
+                  <OptionText>{ing.name}</OptionText>
+                </Option>
+                <Separator />
+              </React.Fragment>
             ))}
 
 
-            <TouchableOpacity
+            <Action
               onPress={() => this.toggleModal()}
             >
-              <Text>Cancelar</Text>
-            </TouchableOpacity>
+              <ActionText>Cancelar</ActionText>
+            </Action>
           </View>
         </Modal>
       </Container>

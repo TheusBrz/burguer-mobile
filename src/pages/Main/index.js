@@ -11,10 +11,10 @@ import { Creators as BasketActions } from '~/store/ducks/basket';
 
 import { colors } from '~/styles';
 import {
-  Header, Title, Container, Separator,
+  Header, Title, Container, Separator, Option, OptionText,
 } from '~/styles/general';
 import {
-  Fab, Option, OptionText,
+  Fab,
 } from './styles';
 
 class Main extends Component {
