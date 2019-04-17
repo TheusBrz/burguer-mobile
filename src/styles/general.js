@@ -149,3 +149,8 @@ export const OptionText = styled.Text`
 color: ${colors.white};
 font-size: 20;
 `;
+
+export const Promotion = styled.Text`
+  font-size: 10;
+  text-align: left;
+`;

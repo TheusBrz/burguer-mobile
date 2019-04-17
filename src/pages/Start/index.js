@@ -26,7 +26,7 @@ class Start extends Component {
       <Loading>
         <StatusBar
           backgroundColor={colors.primary}
-          barStyle="light-content"
+          barStyle="dark-content"
         />
         <Logo>
           Native

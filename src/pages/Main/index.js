@@ -68,7 +68,7 @@ class Main extends Component {
         <Fab
           onPress={() => navigate('Basket')}
         >
-          <Icon name="shopping-basket" size={24} color={colors.white} />
+          <Icon name="shopping-basket" size={26} color={colors.option} />
         </Fab>
         )}
       </Container>

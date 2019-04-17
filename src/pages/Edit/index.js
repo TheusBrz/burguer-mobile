@@ -18,22 +18,26 @@ import PropTypes from 'prop-types';
 import { colors } from '~/styles';
 import {
   Container,
-  Header, Title,
-
+  Header,
+  Title,
   Pedido,
-
-  Burguer, BrgName, /* BrgActions, */ BrgFooter,
-
-  Ingredient, IngName, IngPrice,
-
-  Action, ActionText,
+  Burguer,
+  BrgName,
+  BrgFooter,
+  Ingredient,
+  IngName,
+  IngPrice,
+  Action,
+  ActionText,
   Separator,
-
   Option,
   OptionText,
-
-  Finish, FinishText,
+  Promotion,
+  Finish,
+  FinishText,
 } from '~/styles/general';
+
+import { AddIng } from './styles';
 
 class Edit extends Component {
   state = { modalVisible: false }
@@ -56,9 +60,15 @@ class Edit extends Component {
     const more = item.ingredients.filter(ing => ing.amount < 1);
 
     const contain = item.ingredients.filter(ing => ing.amount >= 1);
+
     const isLight = !!(((contain.filter(ing => ing.name === 'Alface')
       .length >= 1)
       && (contain.filter(ing => ing.name === 'Bacon').length < 1)));
+
+    const muchMeat = (contain.filter(ing => ing.name === 'Hambúrguer de carne'));
+
+    const muchCheese = (contain.filter(ing => ing.name === 'Queijo'));
+
 
     let total = 0.00;
 
@@ -141,12 +151,34 @@ class Edit extends Component {
           <Action
             onPress={() => this.toggleModal()}
           >
-            <ActionText>Adicionar novo ingrediente</ActionText>
+            <AddIng>Adicionar novo ingrediente</AddIng>
           </Action>
           )}
 
           {total !== null && (
-            <BrgFooter>
+            <BrgFooter style={{ justifyContent: 'space-between' }}>
+
+
+              {(isLight === true) && (
+              <Promotion style={{ color: colors.green }}>
+                Light!
+              </Promotion>
+              )}
+
+              {(muchMeat.length > 2) && (
+              <Promotion style={{ color: colors.red }}>
+                Muito carne!
+              </Promotion>
+              )}
+
+              {(muchCheese.length > 2) && (
+              <Promotion style={{ color: colors.yellow }}>
+                Muito queijo!
+              </Promotion>
+              )}
+
+              <View />
+
               <IngPrice>
                 Total: R$
                 {' '}

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  Alert, FlatList, StatusBar,
+  Alert, FlatList, StatusBar, View,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { navigate } from '~/services/navigation';
@@ -14,22 +14,24 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 import { colors } from '~/styles';
 import {
+  Header,
+  Title,
   Container,
   Pedido,
-
-  Burguer, BrgName, BrgActions, BrgFooter,
-
-  Ingredient, IngName, IngPrice,
-
-  Action, ActionText,
-
+  Burguer,
+  BrgName,
+  BrgActions,
+  BrgFooter,
+  Ingredient,
+  IngName,
+  IngPrice,
+  Action,
+  ActionText,
   Separator,
-
-  Finish, FinishText,
+  Promotion,
+  Finish,
+  FinishText,
 } from '~/styles/general';
-import {
-  Header, Title,
-} from './styles';
 
 class Basket extends Component {
   componentDidMount() {
@@ -58,15 +60,19 @@ class Basket extends Component {
           keyExtractor={item => `${item.id}`}
           ListHeaderComponent={() => (
             <Header>
-              <Title>
-                Meu
-                {'\n'}
-                pedido:
-              </Title>
+              <Title>Meu pedido:</Title>
             </Header>
           )}
           renderItem={({ item }) => {
             const contain = item.ingredients.filter(ing => ing.amount >= 1);
+
+            const isLight = !!(((contain.filter(ing => ing.name === 'Alface')
+              .length >= 1)
+            && (contain.filter(ing => ing.name === 'Bacon').length < 1)));
+
+            const muchMeat = (contain.filter(ing => ing.name === 'Hambúrguer de carne'));
+
+            const muchCheese = (contain.filter(ing => ing.name === 'Queijo'));
 
             return (
               <Pedido>
@@ -112,9 +118,32 @@ class Basket extends Component {
                   </Ingredient>
                 ))}
 
-                <BrgFooter>
+                <BrgFooter style={{ justifyContent: 'space-between' }}>
+
+
+                  {(isLight === true) && (
+                  <Promotion style={{ color: colors.green }}>
+                    Light!
+                  </Promotion>
+                  )}
+
+                  {(muchMeat.length > 2) && (
+                  <Promotion style={{ color: colors.red }}>
+                    Muito carne!
+                  </Promotion>
+                  )}
+
+                  {(muchCheese.length > 2) && (
+                  <Promotion style={{ color: colors.yellow }}>
+                    Muito queijo!
+                  </Promotion>
+                  )}
+
+                  <View />
+
                   <IngPrice>
-                    Subtotal: R$
+                    Total: R$
+                    {' '}
                     {parseFloat(item.total).toFixed(2).replace('.', ',').trim()}
                   </IngPrice>
                 </BrgFooter>
@@ -145,7 +174,7 @@ class Basket extends Component {
           onPress={
             ((basket.length) < 1)
               ? () => { Alert.alert('Opa!', 'Você precisa de pelo menos 1 item na sua cesta!'); }
-              : () => { Alert.alert('Pedido concluído!', `Seu pedido ficou com um total de R$ ${basketTotal.total}`); }
+              : () => { Alert.alert('Pedido concluído!', `Seu pedido ficou com um total de R$ ${parseFloat(basketTotal.total).toFixed(2).replace('.', ',').trim()}`); }
           }
         >
           <FinishText>FINALIZAR PEDIDO</FinishText>

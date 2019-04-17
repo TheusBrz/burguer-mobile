@@ -1,7 +1,6 @@
 export default {
-  primary: '#eb616c',
-  secundary: '#efd8d5',
-  statusBar: '#691716',
+  primary: '#ffb86c',
+  secundary: '#f8f8f2',
 
   green: '#50fa7b',
   red: '#ff5555',

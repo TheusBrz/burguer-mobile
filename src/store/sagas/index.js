@@ -15,9 +15,19 @@ function* addBasket(action) {
 
   const contain = ingredients.filter(ing => ing.amount >= 1);
 
+  const isLight = !!(((contain.filter(ing => ing.name === 'Alface')
+    .length >= 1)
+    && (contain.filter(ing => ing.name === 'Bacon').length < 1)));
+
   let total = 0.00;
 
-  if (contain.length >= 1) {
+  if ((contain.length >= 1) && (isLight === true)) {
+    total = contain.reduce((previousValue, currentValue) => (
+      { price: (previousValue.price) + (currentValue.price) }
+    ));
+
+    total.price *= 0.9;
+  } else if (contain.length >= 1) {
     total = contain.reduce((previousValue, currentValue) => (
       { price: (previousValue.price) + (currentValue.price) }
     ));
@@ -125,6 +135,7 @@ function* remIng(action) {
   };
 
   yield put(ItemsActions.add(newItem));
+  console.tron.log(newItem);
 }
 
 export default function* rootSaga() {
