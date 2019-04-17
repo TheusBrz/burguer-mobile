@@ -3,8 +3,11 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
+    "test": "jest",
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "test": "jest"
+    "link": "react-native link",
+    "build android":"react-native run-android",
+    "build ios":"react-native run-ios"
   },
   "dependencies": {
     "axios": "^0.18.0",
@@ -12,31 +15,30 @@
     "prop-types": "^15.7.2",
     "react": "16.8.3",
     "react-native": "0.59.4",
-    "react-native-accordion": "^1.0.1",
-    "react-native-collapsible": "^1.4.0",
     "react-native-extra-dimensions-android": "^1.2.5",
     "react-native-gesture-handler": "^1.1.0",
     "react-native-indicators": "^0.13.0",
     "react-native-iphone-x-helper": "^1.2.0",
-    "react-native-keyboard-aware-scroll-view": "^0.8.0",
+    "react-native-masked-text": "^1.12.1",
     "react-native-md5": "^1.0.0",
     "react-native-modal": "^9.0.0",
     "react-native-vector-icons": "^6.4.2",
     "react-navigation": "^3.8.1",
     "react-redux": "^7.0.2",
-    "reactotron-react-native": "^3.2.1",
-    "reactotron-redux": "^3.1.0",
     "redux": "^4.0.1",
     "redux-saga": "^1.0.2",
     "styled-components": "^4.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.4.3",
+    "@babel/plugin-proposal-class-properties": "^7.4.0",
     "@babel/runtime": "^7.4.3",
     "babel-eslint": "^10.0.1",
     "babel-jest": "^24.7.1",
     "babel-plugin-root-import": "^6.1.0",
     "babel-plugin-transform-remove-console": "^6.9.4",
+    "enzyme": "^3.9.0",
+    "enzyme-adapter-react-16": "^1.12.1",
     "eslint": "^5.16.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-import-resolver-babel-plugin-root-import": "^1.1.1",
@@ -46,7 +48,10 @@
     "eslint-plugin-react-native": "^3.6.0",
     "jest": "^24.7.1",
     "metro-react-native-babel-preset": "^0.53.1",
-    "react-test-renderer": "16.8.3"
+    "react-dom": "^16.8.6",
+    "react-test-renderer": "16.8.3",
+    "reactotron-react-native": "^3.2.2",
+    "reactotron-redux": "^3.1.0"
   },
   "jest": {
     "preset": "react-native"

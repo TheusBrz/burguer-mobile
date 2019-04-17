@@ -1,5 +1,5 @@
 export default {
-  primary: '#831d1c',
+  primary: '#eb616c',
   secundary: '#efd8d5',
   statusBar: '#691716',
 

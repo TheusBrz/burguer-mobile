@@ -7,7 +7,9 @@
   "globals": {
     "Atomics": "readonly",
     "SharedArrayBuffer": "readonly",
-    "__DEV__": true
+    "__DEV__": true,
+    "it": false,
+    "expect": false
   },
   "parserOptions": {
     "ecmaFeatures": {
@@ -16,9 +18,13 @@
     "ecmaVersion": 2018,
     "sourceType": "module"
   },
-  "plugins": ["react", "jsx-a11y"],
+  "plugins": [
+    "react", 
+    "jsx-a11y"
+  ],
   "rules": {
     "react/jsx-filename-extension": [1, { "extensions": [".jsx", ".js"] }],
+    "import/no-extraneous-dependencies": ["error", {"devDependencies": true}],
     "import/prefer-default-export": "off",
     "global-require": 0
   },

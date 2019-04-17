@@ -1,26 +1,41 @@
 import React, { Component } from 'react';
 import {
-  View, Text, TouchableOpacity, Platform, Dimensions, StatusBar,
+  Alert, View, Text, TouchableOpacity, Platform, Dimensions, StatusBar,
 } from 'react-native';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Creators as ItemsActions } from '~/store/ducks/items';
+import { Creators as BasketActions } from '~/store/ducks/basket';
+import { Creators as CombosActions } from '~/store/ducks/combos';
+
+import { navigate } from '~/services/navigation';
 
 import Modal from 'react-native-modal';
-
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import PropTypes from 'prop-types';
 
 import { colors } from '~/styles';
-import { Container } from '~/styles/general';
+import {
+  Container,
+  Header, Title,
+
+  Pedido,
+
+  Burguer, BrgName, /* BrgActions, */ BrgFooter,
+
+  Ingredient, IngName, IngPrice,
+
+  Action, ActionText,
+  Separator,
+
+  Finish, FinishText,
+} from '~/styles/general';
 
 class Edit extends Component {
   state = { modalVisible: false }
 
   componentDidMount() {
-    const { item } = this.props;
-
-    console.tron.log(item);
   }
 
   toggleModal = () => {
@@ -31,14 +46,36 @@ class Edit extends Component {
 
   render() {
     const {
-      item, addOne, remOne, ingredients,
+      item, addOne, remOne, remove, request,
     } = this.props;
     const { modalVisible } = this.state;
+
+    const more = item.ingredients.filter(ing => ing.amount < 1);
+
+    const contain = item.ingredients.filter(ing => ing.amount >= 1);
+    const isLight = !!(((contain.filter(ing => ing.name === 'Alface')
+      .length >= 1)
+      && (contain.filter(ing => ing.name === 'Bacon').length < 1)));
+
+    let total = 0.00;
+
+    if ((contain.length >= 1) && (isLight === true)) {
+      total = contain.reduce((previousValue, currentValue) => (
+        { price: (previousValue.price) + (currentValue.price) }
+      ));
+
+      total.price *= 0.9;
+    } else if (contain.length >= 1) {
+      total = contain.reduce((previousValue, currentValue) => (
+        { price: (previousValue.price) + (currentValue.price) }
+      ));
+    }
 
     const deviceWidth = Dimensions.get('window').width;
     const deviceHeight = Platform.OS === 'ios'
       ? Dimensions.get('window').height
-      : require('react-native-extra-dimensions-android').get('REAL_WINDOW_HEIGHT');
+      : require('react-native-extra-dimensions-android')
+        .get('REAL_WINDOW_HEIGHT');
 
     return (
       <Container>
@@ -46,51 +83,95 @@ class Edit extends Component {
           backgroundColor={colors.background}
           barStyle="light-content"
         />
-        <Text>{item.name}</Text>
+        <Header>
+          <Title>Edição de ingredientes</Title>
+        </Header>
 
-        {item.ingredients.map(ing => (
-          <View key={ing.id}>
-            <Text>
-              -
-              {ing.name}
-              {' '}
-              {ing.amount}
-              {' '}
-              R$
-              {ing.price}
-            </Text>
+        <Pedido>
+          <Burguer>
+            <BrgName>{item.name}</BrgName>
+          </Burguer>
 
-            <TouchableOpacity
-              onPress={() => { addOne(ing); }}
-            >
-              <Text>+</Text>
-            </TouchableOpacity>
+          {(contain.length >= 1) && contain.map(ing => (
+            <Ingredient key={ing.id}>
+              <IngName>
+                {ing.name}
+              </IngName>
 
-            <TouchableOpacity
-              onPress={() => { remOne(ing); }}
-            >
-              <Text>-</Text>
-            </TouchableOpacity>
+              <TouchableOpacity
+                onPress={(ing.amount > 1)
+                  ? () => { remOne(ing); }
+                  : () => {
+                    Alert.alert(
+                      'Hey!',
+                      'Você deseja mesmo remover este ingrediente?',
+                      [
+                        { text: 'Sim!', onPress: () => remOne(ing) },
+                        { text: 'Não' },
+                      ],
+                      { cancelable: true },
+                    );
+                  }
+              }
+              >
+                <FontAwesome name="minus" size={15} color={colors.white} />
+              </TouchableOpacity>
 
-          </View>
-        ))}
+              <IngPrice>
+                {ing.amount}
+              </IngPrice>
 
-        <TouchableOpacity
-          onPress={() => this.toggleModal()}
+              <TouchableOpacity
+                onPress={() => { addOne(ing); }}
+              >
+                <FontAwesome name="plus" size={15} color={colors.white} />
+              </TouchableOpacity>
+
+              <IngPrice>
+                R$
+                {parseFloat(ing.price).toFixed(2).replace('.', ',').trim()}
+              </IngPrice>
+            </Ingredient>
+          ))}
+
+          {(more.length >= 1) && (
+          <Action
+            onPress={() => this.toggleModal()}
+          >
+            <ActionText>Adicionar novo ingrediente</ActionText>
+          </Action>
+          )}
+
+          {total !== null && (
+            <BrgFooter>
+              <IngPrice>
+                Total: R$
+                {' '}
+                {parseFloat(total.price || total).toFixed(2).replace('.', ',').trim()}
+              </IngPrice>
+            </BrgFooter>
+          )}
+        </Pedido>
+
+        <Separator />
+
+        <Finish
+          onPress={(contain.length >= 1)
+            ? () => {
+              remove(item);
+              navigate('Basket');
+              request({ item });
+            }
+            : () => {
+              Alert.alert(
+                'Opa!',
+                'Você precisa de pelo menos 1 ingrediente em seu lanche!',
+              );
+            }
+          }
         >
-          <Text>Adicionar novo ingrediente</Text>
-        </TouchableOpacity>
-
-        <Text>
-          {item.total}
-        </Text>
-
-        <TouchableOpacity
-          onPress={() => {}}
-        >
-          <Text>Finalizar Edição</Text>
-        </TouchableOpacity>
-
+          <FinishText>Finalizar Edição</FinishText>
+        </Finish>
 
         <Modal
           isVisible={modalVisible}
@@ -104,14 +185,23 @@ class Edit extends Component {
             backgroundColor: colors.white,
           }}
           >
-            {ingredients.map(ing => (
-              <View key={ing.id}>
+            {more.map(ing => (
+              <TouchableOpacity
+                key={ing.id}
+                onPress={() => {
+                  addOne(ing);
+                  this.toggleModal();
+                }}
+              >
                 <Text>{ing.name}</Text>
-              </View>
+              </TouchableOpacity>
             ))}
 
-            <TouchableOpacity onPress={() => this.toggleModal()}>
-              <Text>Hide me!</Text>
+
+            <TouchableOpacity
+              onPress={() => this.toggleModal()}
+            >
+              <Text>Cancelar</Text>
             </TouchableOpacity>
           </View>
         </Modal>
@@ -126,16 +216,18 @@ Edit.propTypes = {
     PropTypes.number,
     PropTypes.array,
   ])),
-  ingredients: PropTypes.arrayOf(PropTypes.object),
   addOne: PropTypes.func,
   remOne: PropTypes.func,
+  remove: PropTypes.func,
+  request: PropTypes.func,
 };
 
 Edit.defaultProps = {
   item: {},
-  ingredients: [],
   addOne: () => {},
   remOne: () => {},
+  remove: () => {},
+  request: () => {},
 };
 
 const mapStateToProps = state => ({
@@ -147,6 +239,8 @@ const mapDispatchToProps = dispatch => bindActionCreators(
   {
     addOne: ItemsActions.addOne,
     remOne: ItemsActions.remOne,
+    remove: BasketActions.rem,
+    request: CombosActions.addRequest,
   },
   dispatch,
 );

@@ -7,25 +7,24 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Creators as CombosActions } from '~/store/ducks/combos';
+import { Creators as BasketActions } from '~/store/ducks/basket';
 
 import { colors } from '~/styles';
 import {
-  Container,
+  Header, Title, Container, Separator,
 } from '~/styles/general';
 import {
-  Fab, Header, Title, Option, OptionText, Separator,
+  Fab, Option, OptionText,
 } from './styles';
 
 class Main extends Component {
   componentDidMount() {
-    const { combos, basket } = this.props;
-
-    console.tron.log(combos);
-    console.tron.log(basket.length);
   }
 
   render() {
-    const { combos, request, basket } = this.props;
+    const {
+      combos, request, basket, edit,
+    } = this.props;
 
     return (
       <Container>
@@ -49,13 +48,18 @@ class Main extends Component {
               </Title>
             </Header>
           )}
-          renderItem={({ item }) => (
-            <Option
-              onPress={() => { request({ item }); }}
-            >
-              <OptionText>{item.name}</OptionText>
-            </Option>
-          )}
+          renderItem={({ item }) => {
+            const { name } = item;
+            return (
+              <Option
+                onPress={((name) === 'Monte do seu jeito!')
+                  ? () => { edit(item); }
+                  : () => { request({ item }); }}
+              >
+                <OptionText>{item.name}</OptionText>
+              </Option>
+            );
+          }}
           ItemSeparatorComponent={() => <Separator />}
         />
 
@@ -67,8 +71,6 @@ class Main extends Component {
           <Icon name="shopping-basket" size={24} color={colors.white} />
         </Fab>
         )}
-
-
       </Container>
     );
   }
@@ -78,12 +80,14 @@ Main.propTypes = {
   combos: PropTypes.arrayOf(PropTypes.object),
   basket: PropTypes.arrayOf(PropTypes.object),
   request: PropTypes.func,
+  edit: PropTypes.func,
 };
 
 Main.defaultProps = {
   combos: [],
   basket: [],
   request: () => {},
+  edit: () => {},
 };
 
 const mapStateToProps = state => ({
@@ -92,7 +96,10 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(
-  { request: CombosActions.addRequest },
+  {
+    request: CombosActions.addRequest,
+    edit: BasketActions.edit,
+  },
   dispatch,
 );
 

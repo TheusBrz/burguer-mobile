@@ -3,8 +3,6 @@
  */
 const Types = {
   REQUEST: 'ADD_BASKET_REQUEST',
-  SUCCESS: 'ADD_SUCCESS',
-  FAILURE: 'ADD_FAILURE',
 };
 
 /**
@@ -19,11 +17,20 @@ const INITIAL_STATE = {
       amount: 1,
       ingredients: [
         {
+          id: 1,
+          name: 'Alface',
+          amount: 0,
+          unity: 0.40,
+          price: 0.00,
+          promotion: 0.00,
+        },
+        {
           id: 2,
           name: 'Bacon',
           amount: 1,
           unity: 2.00,
           price: 2.00,
+          promotion: 0.00,
         },
         {
           id: 3,
@@ -31,6 +38,15 @@ const INITIAL_STATE = {
           amount: 1,
           unity: 3.00,
           price: 3.00,
+          promotion: 0.00,
+        },
+        {
+          id: 4,
+          name: 'Ovo',
+          amount: 0,
+          unity: 0.80,
+          price: 0.00,
+          promotion: 0.00,
         },
         {
           id: 5,
@@ -38,6 +54,7 @@ const INITIAL_STATE = {
           amount: 1,
           unity: 1.50,
           price: 1.50,
+          promotion: 0.00,
         },
       ],
     },
@@ -47,11 +64,36 @@ const INITIAL_STATE = {
       amount: 1,
       ingredients: [
         {
+          id: 1,
+          name: 'Alface',
+          amount: 0,
+          unity: 0.40,
+          price: 0.00,
+          promotion: 0.00,
+        },
+        {
+          id: 2,
+          name: 'Bacon',
+          amount: 0,
+          unity: 2.00,
+          price: 0.00,
+          promotion: 0.00,
+        },
+        {
           id: 3,
           name: 'Hambúrguer de carne',
           amount: 1,
           unity: 3.00,
           price: 3.00,
+          promotion: 0.00,
+        },
+        {
+          id: 4,
+          name: 'Ovo',
+          amount: 0,
+          unity: 0.80,
+          price: 0.80,
+          promotion: 0.00,
         },
         {
           id: 5,
@@ -59,6 +101,7 @@ const INITIAL_STATE = {
           amount: 1,
           unity: 1.50,
           price: 1.50,
+          promotion: 0.00,
         },
       ],
     },
@@ -68,11 +111,28 @@ const INITIAL_STATE = {
       amount: 1,
       ingredients: [
         {
+          id: 1,
+          name: 'Alface',
+          amount: 0,
+          unity: 0.40,
+          price: 0.00,
+          promotion: 0.00,
+        },
+        {
+          id: 2,
+          name: 'Bacon',
+          amount: 0,
+          unity: 2.00,
+          price: 0.00,
+          promotion: 0.00,
+        },
+        {
           id: 3,
           name: 'Hambúrguer de carne',
           amount: 1,
           unity: 3.00,
           price: 3.00,
+          promotion: 0.00,
         },
         {
           id: 4,
@@ -80,6 +140,7 @@ const INITIAL_STATE = {
           amount: 1,
           unity: 0.80,
           price: 0.80,
+          promotion: 0.00,
         },
         {
           id: 5,
@@ -87,6 +148,7 @@ const INITIAL_STATE = {
           amount: 1,
           unity: 1.50,
           price: 1.50,
+          promotion: 0.00,
         },
       ],
     },
@@ -96,11 +158,20 @@ const INITIAL_STATE = {
       amount: 1,
       ingredients: [
         {
+          id: 1,
+          name: 'Alface',
+          amount: 0,
+          unity: 0.40,
+          price: 0.00,
+          promotion: 0.00,
+        },
+        {
           id: 2,
           name: 'Bacon',
           amount: 1,
           unity: 2.00,
           price: 2.00,
+          promotion: 0.00,
         },
         {
           id: 3,
@@ -108,6 +179,7 @@ const INITIAL_STATE = {
           amount: 1,
           unity: 3.00,
           price: 3.00,
+          promotion: 0.00,
         },
         {
           id: 4,
@@ -115,6 +187,7 @@ const INITIAL_STATE = {
           amount: 1,
           unity: 0.80,
           price: 0.80,
+          promotion: 0.00,
         },
         {
           id: 5,
@@ -122,6 +195,7 @@ const INITIAL_STATE = {
           amount: 1,
           unity: 1.50,
           price: 1.50,
+          promotion: 0.00,
         },
       ],
     },
@@ -129,7 +203,48 @@ const INITIAL_STATE = {
       id: 5,
       name: 'Monte do seu jeito!',
       amount: 1,
-      ingredients: [],
+      ingredients: [
+        {
+          id: 1,
+          name: 'Alface',
+          amount: 0,
+          unity: 0.40,
+          price: 0.00,
+          promotion: 0.00,
+        },
+        {
+          id: 2,
+          name: 'Bacon',
+          amount: 0,
+          unity: 2.00,
+          price: 0.00,
+          promotion: 0.00,
+        },
+        {
+          id: 3,
+          name: 'Hambúrguer de carne',
+          amount: 0,
+          unity: 3.00,
+          price: 0.00,
+          promotion: 0.00,
+        },
+        {
+          id: 4,
+          name: 'Ovo',
+          amount: 0,
+          unity: 0.80,
+          price: 0.00,
+          promotion: 0.00,
+        },
+        {
+          id: 5,
+          name: 'Queijo',
+          amount: 0,
+          unity: 1.50,
+          price: 0.00,
+          promotion: 0.00,
+        },
+      ],
     },
   ],
 };

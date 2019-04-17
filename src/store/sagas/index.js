@@ -13,9 +13,15 @@ function* addBasket(action) {
   const { id, name, ingredients } = action.payload.item;
   const now = moment();
 
-  const total = ingredients.reduce((previousValue, currentValue) => ({
-    price: (previousValue.price) + (currentValue.price),
-  }));
+  const contain = ingredients.filter(ing => ing.amount >= 1);
+
+  let total = 0.00;
+
+  if (contain.length >= 1) {
+    total = contain.reduce((previousValue, currentValue) => (
+      { price: (previousValue.price) + (currentValue.price) }
+    ));
+  }
 
   const newItem = {
     id: md5.hex_md5(`${id}|${name}|${now}`),
@@ -37,11 +43,9 @@ function* editItem(action) {
   yield navigate('Edit');
 }
 
-function* addIng(action) {
-  console.tron.log('action', action);
-  const oldItem = yield select(state => state.items.item);
-  console.tron.log('oldItem', oldItem);
 
+function* addIng(action) {
+  const oldItem = yield select(state => state.items.item);
 
   const ingredients = oldItem.ingredients.map(ing => (ing.id === action.payload.id
     ? {
@@ -49,14 +53,28 @@ function* addIng(action) {
       amount: ing.amount + 1,
       price: (ing.name === 'Queijo'
       || ing.name === 'Hambúrguer de carne')
-        ? (ing.unity * (ing.amount + 1))
+        ? ((ing.unity * (ing.amount + 1)) - (ing.unity * (Math.floor((ing.amount + 1) / 3))))
         : (ing.unity * (ing.amount + 1)),
     }
     : ing));
 
-  const total = ingredients.reduce((previousValue, currentValue) => ({
-    price: (previousValue.price) + (currentValue.price),
-  }));
+  const contain = ingredients.filter(ing => ing.amount >= 1);
+  const isLight = !!(((contain.filter(ing => ing.name === 'Alface').length >= 1)
+        && (contain.filter(ing => ing.name === 'Bacon').length < 1)));
+
+  let total = 0.00;
+
+  if ((contain.length >= 1) && (isLight === true)) {
+    total = contain.reduce((previousValue, currentValue) => (
+      { price: (previousValue.price) + (currentValue.price) }
+    ));
+
+    total.price *= 0.9;
+  } else if (contain.length >= 1) {
+    total = contain.reduce((previousValue, currentValue) => (
+      { price: (previousValue.price) + (currentValue.price) }
+    ));
+  }
 
   const newItem = {
     ...oldItem,
@@ -64,17 +82,12 @@ function* addIng(action) {
     total: total.price,
   };
 
-
-  console.tron.log(newItem);
   yield put(ItemsActions.add(newItem));
-  // const item = action.payload;
 }
 
-function* remIng(action) {
-  console.tron.log('action', action);
-  const oldItem = yield select(state => state.items.item);
-  console.tron.log('oldItem', oldItem);
 
+function* remIng(action) {
+  const oldItem = yield select(state => state.items.item);
 
   const ingredients = oldItem.ingredients.map(ing => (ing.id === action.payload.id
     ? {
@@ -82,14 +95,28 @@ function* remIng(action) {
       amount: ing.amount - 1,
       price: (ing.name === 'Queijo'
       || ing.name === 'Hambúrguer de carne')
-        ? (ing.unity * (ing.amount - 1))
+        ? ((ing.unity * (ing.amount - 1)) - (ing.unity * (Math.floor((ing.amount - 1) / 3))))
         : (ing.unity * (ing.amount - 1)),
     }
     : ing));
 
-  const total = ingredients.reduce((previousValue, currentValue) => ({
-    price: (previousValue.price) + (currentValue.price),
-  }));
+  const contain = ingredients.filter(ing => ing.amount >= 1);
+  const isLight = !!(((contain.filter(ing => ing.name === 'Alface').length >= 1)
+        && (contain.filter(ing => ing.name === 'Bacon').length < 1)));
+
+  let total = 0.00;
+
+  if ((contain.length >= 1) && (isLight === true)) {
+    total = contain.reduce((previousValue, currentValue) => (
+      { price: (previousValue.price) + (currentValue.price) }
+    ));
+
+    total.price *= 0.9;
+  } else if (contain.length >= 1) {
+    total = contain.reduce((previousValue, currentValue) => (
+      { price: (previousValue.price) + (currentValue.price) }
+    ));
+  }
 
   const newItem = {
     ...oldItem,
@@ -97,16 +124,13 @@ function* remIng(action) {
     total: total.price,
   };
 
-
-  console.tron.log(newItem);
   yield put(ItemsActions.add(newItem));
-  // const item = action.payload;
 }
 
 export default function* rootSaga() {
   return yield all([
-    takeLatest('ADD_BASKET_REQUEST', addBasket),
     takeLatest('EDIT_ITEM', editItem),
+    takeLatest('ADD_BASKET_REQUEST', addBasket),
     takeLatest('ADD_ONE_INGREDIENT', addIng),
     takeLatest('REM_ONE_INGREDIENT', remIng),
   ]);

@@ -6,7 +6,6 @@ const Types = {
   ADD_ONE: 'ADD_ONE_INGREDIENT',
   REM_ONE: 'REM_ONE_INGREDIENT',
   FINISH: 'FINISH_EDITING',
-  NEW_ING: 'NEW_INGREDIENT',
 };
 
 /**
@@ -27,36 +26,13 @@ export default function items(state = INITIAL_STATE, action) {
     case Types.ADD_ONE:
       return {
         ...state,
-        // item: {
-        //   ...state.item,
-        //   ingredients: state.item.ingredients.map(ing => (ing.id === action.payload.id
-        //     ? { ...ing, amount: ing.amount + 1, price: (ing.unity * (ing.amount + 1)) }
-        //     : ing)),
-        // },
       };
 
     case Types.REM_ONE:
       return {
         ...state,
-        // item: {
-        //   ...state.item,
-        //   ingredients: state.item.ingredients.map(ing => (ing.id === action.payload.id
-        //     ? { ...ing, amount: ing.amount - 1, price: (ing.unity * (ing.amount - 1)) }
-        //     : ing)),
-        // },
       };
 
-    case Types.NEW_ING:
-      return {
-        ...state,
-        item: {
-          ...state.item,
-          ingredients: [
-            ...state.item.ingredients,
-            action.payload,
-          ],
-        },
-      };
     default:
       return state;
   }
@@ -83,11 +59,6 @@ export const Creators = {
 
   finish: item => ({
     type: Types.FINISH,
-    payload: item,
-  }),
-
-  newIng: item => ({
-    type: Types.NEW_ING,
     payload: item,
   }),
 };

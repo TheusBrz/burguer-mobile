@@ -20,7 +20,6 @@ export const Title = styled.Text`
 
 export const Option = styled.View`
   flex-direction: row-reverse;
-  border-width: 1;
   align-self: center;
   align-items: center;
   justify-content: space-evenly;
@@ -33,7 +32,6 @@ export const Option = styled.View`
 
 export const OptionText = styled.Text`
   color: ${colors.white};
-border-width: 1;
   font-size: 20;
   text-align: left;
   margin: 0 0 0 5px;
