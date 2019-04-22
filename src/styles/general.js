@@ -10,7 +10,6 @@ import colors from './colors';
 /**
  * Global styles
  */
-
 export const Container = styled.View`
   flex: 1;
   align-items: stretch;
@@ -33,45 +32,47 @@ export const Title = styled.Text`
   margin: 7% 0;
 `;
 
-export const Pedido = styled.View`
-  padding: 3%;
-  background-color: ${colors.option};
-  align-self: center;
-  border-radius: 6;
-  width: 85%;
-`;
-
 // Estilos do Hambúrguer
-export const Burguer = styled.View`
-  flex-direction: row;
-  margin: 0 2.5%;
-  padding: 1% 0;
-  justify-content: space-between;
-  border-bottom-width: 1px;
-  border-color: ${colors.background};
-  align-items: center;
-`;
+export const Burguer = {
+  Container: styled.View`
+    padding: 3%;
+    background-color: ${colors.option};
+    align-self: center;
+    border-radius: 6;
+    width: 85%;
+  `,
 
-export const BrgName = styled.Text`
-  color: ${colors.white};
-  font-size: 20;
-  text-align: left;
-  width: 70%;
-`;
+  Header: styled.View`
+    flex-direction: row;
+    margin: 0 2.5%;
+    padding: 1% 0;
+    justify-content: space-between;
+    border-bottom-width: 1px;
+    border-color: ${colors.background};
+    align-items: center;
+  `,
 
-export const BrgActions = styled.TouchableOpacity`
-  margin: 0 5% 0 0;
-  align-self: center;
-`;
+  Name: styled.Text`
+    color: ${colors.white};
+    font-size: 20;
+    text-align: left;
+    width: 70%;
+  `,
 
-export const BrgFooter = styled.View`
-  border-top-width: 1px;
-  border-color: ${colors.background};
-  flex-direction: row;
-  padding: 1% 5%;
-  justify-content: flex-end;
-  align-items: center;
-`;
+  Actions: styled.TouchableOpacity`
+    margin: 0 5% 0 0;
+    align-self: center;
+  `,
+
+  Footer: styled.View`
+    border-top-width: 1px;
+    border-color: ${colors.background};
+    flex-direction: row;
+    padding: 1% 5%;
+    justify-content: flex-end;
+    align-items: center;
+  `,
+};
 
 // Estilos dos ingredientes
 export const Ingredient = styled.View`
