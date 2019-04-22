@@ -10,7 +10,9 @@ import md5 from 'react-native-md5';
 import { navigate } from '~/services/navigation';
 
 function* addBasket(action) {
-  const { id, name, ingredients } = action.payload.item;
+  const {
+    id, name, ingredients, promotions,
+  } = action.payload.item;
   const now = moment();
 
   const contain = ingredients.filter(ing => ing.amount >= 1);
@@ -38,6 +40,7 @@ function* addBasket(action) {
     name,
     ingredients,
     total: total.price,
+    promotions,
   };
 
   yield put(BasketActions.add(newItem));
@@ -69,8 +72,20 @@ function* addIng(action) {
     : ing));
 
   const contain = ingredients.filter(ing => ing.amount >= 1);
+
   const isLight = !!(((contain.filter(ing => ing.name === 'Alface').length >= 1)
-        && (contain.filter(ing => ing.name === 'Bacon').length < 1)));
+      && (contain.filter(ing => ing.name === 'Bacon').length < 1)));
+
+  let muchMeat = (contain.filter(ing => ing.name === 'Hambúrguer de carne'));
+
+  if (muchMeat[0].amount >= 3) {
+    muchMeat = true;
+  } else muchMeat = false;
+  let muchCheese = (contain.filter(ing => ing.name === 'Queijo'));
+
+  if (muchCheese[0].amount >= 3) {
+    muchCheese = true;
+  } else muchCheese = false;
 
   let total = 0.00;
 
@@ -86,10 +101,17 @@ function* addIng(action) {
     ));
   }
 
+  const promotions = {
+    isLight,
+    muchMeat,
+    muchCheese,
+  };
+
   const newItem = {
     ...oldItem,
     ingredients,
     total: total.price,
+    promotions,
   };
 
   yield put(ItemsActions.add(newItem));
@@ -111,8 +133,20 @@ function* remIng(action) {
     : ing));
 
   const contain = ingredients.filter(ing => ing.amount >= 1);
+
   const isLight = !!(((contain.filter(ing => ing.name === 'Alface').length >= 1)
-        && (contain.filter(ing => ing.name === 'Bacon').length < 1)));
+    && (contain.filter(ing => ing.name === 'Bacon').length < 1)));
+
+  let muchMeat = (contain.filter(ing => ing.name === 'Hambúrguer de carne'));
+
+  if (muchMeat[0].amount >= 3) {
+    muchMeat = true;
+  } else muchMeat = false;
+  let muchCheese = (contain.filter(ing => ing.name === 'Queijo'));
+
+  if (muchCheese[0].amount >= 3) {
+    muchCheese = true;
+  } else muchCheese = false;
 
   let total = 0.00;
 
@@ -128,14 +162,20 @@ function* remIng(action) {
     ));
   }
 
+  const promotions = {
+    isLight,
+    muchMeat,
+    muchCheese,
+  };
+
   const newItem = {
     ...oldItem,
     ingredients,
     total: total.price,
+    promotions,
   };
 
   yield put(ItemsActions.add(newItem));
-  console.tron.log(newItem);
 }
 
 export default function* rootSaga() {

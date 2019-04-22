@@ -20,10 +20,7 @@ import {
   Container,
   Header,
   Title,
-  Pedido,
   Burguer,
-  BrgName,
-  BrgFooter,
   Ingredient,
   IngName,
   IngPrice,
@@ -58,21 +55,18 @@ class Edit extends Component {
     const { modalVisible } = this.state;
 
     const more = item.ingredients.filter(ing => ing.amount < 1);
-
     const contain = item.ingredients.filter(ing => ing.amount >= 1);
 
-    const isLight = !!(((contain.filter(ing => ing.name === 'Alface')
-      .length >= 1)
-      && (contain.filter(ing => ing.name === 'Bacon').length < 1)));
-
-    const muchMeat = (contain.filter(ing => ing.name === 'Hambúrguer de carne'));
-
-    const muchCheese = (contain.filter(ing => ing.name === 'Queijo'));
+    // const isLight = !!(((contain.filter(ing => ing.name === 'Alface')
+    //   .length >= 1)
+    //   && (contain.filter(ing => ing.name === 'Bacon').length < 1)));
+    // const muchMeat = (contain.filter(ing => ing.name === 'Hambúrguer de carne').length >= 3);
+    // const muchCheese = (contain.filter(ing => ing.name === 'Queijo').length >= 3);
 
 
     let total = 0.00;
 
-    if ((contain.length >= 1) && (isLight === true)) {
+    if ((contain.length >= 1) && (item.promotions.isLight === true)) {
       total = contain.reduce((previousValue, currentValue) => (
         { price: (previousValue.price) + (currentValue.price) }
       ));
@@ -100,10 +94,10 @@ class Edit extends Component {
           <Title>Edição de ingredientes</Title>
         </Header>
 
-        <Pedido>
-          <Burguer>
-            <BrgName>{item.name}</BrgName>
-          </Burguer>
+        <Burguer.Container>
+          <Burguer.Header>
+            <Burguer.Name>{item.name}</Burguer.Name>
+          </Burguer.Header>
 
           {(contain.length >= 1) && contain.map(ing => (
             <Ingredient key={ing.id}>
@@ -156,22 +150,22 @@ class Edit extends Component {
           )}
 
           {total !== null && (
-            <BrgFooter style={{ justifyContent: 'space-between' }}>
+            <Burguer.Footer style={{ justifyContent: 'space-between' }}>
 
 
-              {(isLight === true) && (
+              {(item.promotions.isLight) && (
               <Promotion style={{ color: colors.green }}>
                 Light!
               </Promotion>
               )}
 
-              {(muchMeat.length > 2) && (
+              {(item.promotions.muchMeat) && (
               <Promotion style={{ color: colors.red }}>
-                Muito carne!
+                Muita carne!
               </Promotion>
               )}
 
-              {(muchCheese.length > 2) && (
+              {(item.promotions.muchCheese) && (
               <Promotion style={{ color: colors.yellow }}>
                 Muito queijo!
               </Promotion>
@@ -184,9 +178,9 @@ class Edit extends Component {
                 {' '}
                 {parseFloat(total.price || total).toFixed(2).replace('.', ',').trim()}
               </IngPrice>
-            </BrgFooter>
+            </Burguer.Footer>
           )}
-        </Pedido>
+        </Burguer.Container>
 
         <Separator />
 
@@ -255,6 +249,7 @@ Edit.propTypes = {
     PropTypes.string,
     PropTypes.number,
     PropTypes.array,
+    PropTypes.object,
   ])),
   addOne: PropTypes.func,
   remOne: PropTypes.func,

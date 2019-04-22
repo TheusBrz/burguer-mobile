@@ -15,6 +15,11 @@ const INITIAL_STATE = {
       id: 1,
       name: 'X-Bacon',
       amount: 1,
+      promotions: {
+        isLight: false,
+        muchMeat: false,
+        muchCheese: false,
+      },
       ingredients: [
         {
           id: 1,
@@ -62,6 +67,11 @@ const INITIAL_STATE = {
       id: 2,
       name: 'X-Burger',
       amount: 1,
+      promotions: {
+        isLight: false,
+        muchMeat: false,
+        muchCheese: false,
+      },
       ingredients: [
         {
           id: 1,
@@ -109,6 +119,11 @@ const INITIAL_STATE = {
       id: 3,
       name: 'X-Egg',
       amount: 1,
+      promotions: {
+        isLight: false,
+        muchMeat: false,
+        muchCheese: false,
+      },
       ingredients: [
         {
           id: 1,
@@ -156,6 +171,11 @@ const INITIAL_STATE = {
       id: 4,
       name: 'X-Egg Bacon',
       amount: 1,
+      promotions: {
+        isLight: false,
+        muchMeat: false,
+        muchCheese: false,
+      },
       ingredients: [
         {
           id: 1,
@@ -203,6 +223,11 @@ const INITIAL_STATE = {
       id: 5,
       name: 'Monte do seu jeito!',
       amount: 1,
+      promotions: {
+        isLight: false,
+        muchMeat: false,
+        muchCheese: false,
+      },
       ingredients: [
         {
           id: 1,

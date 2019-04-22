@@ -17,11 +17,7 @@ import {
   Header,
   Title,
   Container,
-  Pedido,
   Burguer,
-  BrgName,
-  BrgActions,
-  BrgFooter,
   Ingredient,
   IngName,
   IngPrice,
@@ -46,7 +42,7 @@ class Basket extends Component {
       ? basket.reduce((previousValue, currentValue) => ({
         total: (previousValue.total) + (currentValue.total),
       }))
-      : 0.00;
+      : { total: 0.00 };
 
     return (
       <Container>
@@ -75,11 +71,11 @@ class Basket extends Component {
             const muchCheese = (contain.filter(ing => ing.name === 'Queijo'));
 
             return (
-              <Pedido>
-                <Burguer>
-                  <BrgName>{item.name}</BrgName>
+              <Burguer.Container>
+                <Burguer.Header>
+                  <Burguer.Name>{item.name}</Burguer.Name>
 
-                  <BrgActions
+                  <Burguer.Actions
                     onPress={() => edit(item)}
                   >
                     <FontAwesome
@@ -87,9 +83,9 @@ class Basket extends Component {
                       size={15}
                       color={colors.white}
                     />
-                  </BrgActions>
+                  </Burguer.Actions>
 
-                  <BrgActions
+                  <Burguer.Actions
                     onPress={() => remove(item)}
                   >
                     <FontAwesome
@@ -97,8 +93,8 @@ class Basket extends Component {
                       size={15}
                       color={colors.white}
                     />
-                  </BrgActions>
-                </Burguer>
+                  </Burguer.Actions>
+                </Burguer.Header>
 
 
                 {(contain.length >= 1) && contain.map(ing => (
@@ -118,7 +114,7 @@ class Basket extends Component {
                   </Ingredient>
                 ))}
 
-                <BrgFooter style={{ justifyContent: 'space-between' }}>
+                <Burguer.Footer style={{ justifyContent: 'space-between' }}>
 
 
                   {(isLight === true) && (
@@ -146,20 +142,20 @@ class Basket extends Component {
                     {' '}
                     {parseFloat(item.total).toFixed(2).replace('.', ',').trim()}
                   </IngPrice>
-                </BrgFooter>
-              </Pedido>
+                </Burguer.Footer>
+              </Burguer.Container>
             );
           }}
           ItemSeparatorComponent={() => <Separator />}
           ListFooterComponent={() => (
             <React.Fragment>
               <Separator />
-              <Pedido>
+              <Burguer.Container>
                 <IngPrice>
                   Total: R$
                   {parseFloat(basketTotal.total).toFixed(2).replace('.', ',').trim()}
                 </IngPrice>
-              </Pedido>
+              </Burguer.Container>
 
               <Action
                 onPress={() => { navigate('Main'); }}
@@ -174,7 +170,7 @@ class Basket extends Component {
           onPress={
             ((basket.length) < 1)
               ? () => { Alert.alert('Opa!', 'Você precisa de pelo menos 1 item na sua cesta!'); }
-              : () => { Alert.alert('Pedido concluído!', `Seu pedido ficou com um total de R$ ${parseFloat(basketTotal.total).toFixed(2).replace('.', ',').trim()}`); }
+              : () => { Alert.alert('Burguer.Container concluído!', `Seu pedido ficou com um total de R$ ${parseFloat(basketTotal.total).toFixed(2).replace('.', ',').trim()}`); }
           }
         >
           <FinishText>FINALIZAR PEDIDO</FinishText>
