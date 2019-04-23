@@ -62,14 +62,6 @@ class Basket extends Component {
           renderItem={({ item }) => {
             const contain = item.ingredients.filter(ing => ing.amount >= 1);
 
-            const isLight = !!(((contain.filter(ing => ing.name === 'Alface')
-              .length >= 1)
-            && (contain.filter(ing => ing.name === 'Bacon').length < 1)));
-
-            const muchMeat = (contain.filter(ing => ing.name === 'Hambúrguer de carne'));
-
-            const muchCheese = (contain.filter(ing => ing.name === 'Queijo'));
-
             return (
               <Burguer.Container>
                 <Burguer.Header>
@@ -117,19 +109,19 @@ class Basket extends Component {
                 <Burguer.Footer style={{ justifyContent: 'space-between' }}>
 
 
-                  {(isLight === true) && (
+                  {(item.promotions.isLight) && (
                   <Promotion style={{ color: colors.green }}>
                     Light!
                   </Promotion>
                   )}
 
-                  {(muchMeat.length > 2) && (
+                  {(item.promotions.muchMeat) && (
                   <Promotion style={{ color: colors.red }}>
-                    Muito carne!
+                    Muita carne!
                   </Promotion>
                   )}
 
-                  {(muchCheese.length > 2) && (
+                  {(item.promotions.muchCheese) && (
                   <Promotion style={{ color: colors.yellow }}>
                     Muito queijo!
                   </Promotion>
