@@ -10,7 +10,7 @@ const Types = {
  */
 const INITIAL_STATE = {
   selected: {},
-  combos: [
+  data: [
     {
       id: 1,
       name: 'X-Bacon',

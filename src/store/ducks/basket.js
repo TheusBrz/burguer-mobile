@@ -3,8 +3,8 @@
  */
 const Types = {
   NEW: 'NEW_ITEM',
-  REM: 'REM_ITEM',
   EDIT: 'EDIT_ITEM',
+  REM: 'REM_ITEM',
 };
 
 /**

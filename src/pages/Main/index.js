@@ -91,7 +91,7 @@ Main.defaultProps = {
 };
 
 const mapStateToProps = state => ({
-  combos: state.combos.combos,
+  combos: state.combos.data,
   basket: state.basket.items,
 });
 

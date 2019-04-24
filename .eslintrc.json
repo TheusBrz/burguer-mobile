@@ -8,8 +8,9 @@
     "Atomics": "readonly",
     "SharedArrayBuffer": "readonly",
     "__DEV__": true,
-    "it": false,
-    "expect": false
+    "it": true,
+    "expect": true,
+    "describe": true
   },
   "parserOptions": {
     "ecmaFeatures": {

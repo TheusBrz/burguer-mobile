@@ -28,7 +28,6 @@
   },
   "devDependencies": {
     "@babel/core": "^7.4.3",
-    "@babel/plugin-proposal-class-properties": "^7.4.0",
     "@babel/runtime": "^7.4.3",
     "babel-eslint": "^10.0.1",
     "babel-jest": "^24.7.1",
@@ -48,9 +47,7 @@
     "react-dom": "^16.8.6",
     "react-test-renderer": "16.8.3",
     "reactotron-react-native": "^3.2.2",
-    "reactotron-redux": "^3.1.0"
-  },
-  "jest": {
-    "preset": "react-native"
+    "reactotron-redux": "^3.1.0",
+    "tape": "^4.10.1"
   }
 }

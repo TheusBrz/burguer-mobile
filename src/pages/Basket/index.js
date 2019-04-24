@@ -162,7 +162,7 @@ class Basket extends Component {
           onPress={
             ((basket.length) < 1)
               ? () => { Alert.alert('Opa!', 'Você precisa de pelo menos 1 item na sua cesta!'); }
-              : () => { Alert.alert('Burguer.Container concluído!', `Seu pedido ficou com um total de R$ ${parseFloat(basketTotal.total).toFixed(2).replace('.', ',').trim()}`); }
+              : () => { Alert.alert('Pedido concluído!', `Seu pedido ficou com um total de R$ ${parseFloat(basketTotal.total).toFixed(2).replace('.', ',').trim()}`); }
           }
         >
           <FinishText>FINALIZAR PEDIDO</FinishText>
