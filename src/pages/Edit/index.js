@@ -5,9 +5,7 @@ import {
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Creators as ItemsActions } from '~/store/ducks/items';
-import { Creators as BasketActions } from '~/store/ducks/basket';
-import { Creators as CombosActions } from '~/store/ducks/combos';
+import { Creators } from '~/store/ducks';
 
 import { navigate } from '~/services/navigation';
 
@@ -39,9 +37,6 @@ import { AddIng } from './styles';
 class Edit extends Component {
   state = { modalVisible: false }
 
-  componentDidMount() {
-  }
-
   toggleModal = () => {
     const { modalVisible } = this.state;
 
@@ -50,12 +45,12 @@ class Edit extends Component {
 
   render() {
     const {
-      item, addOne, remOne, remove, request,
+      selected, addIng, remIng, remove, endEdit,
     } = this.props;
     const { modalVisible } = this.state;
 
-    const more = item.ingredients.filter(ing => ing.amount < 1);
-    const contain = item.ingredients.filter(ing => ing.amount >= 1);
+    const more = selected.ingredients.filter(ing => ing.amount < 1);
+    const contain = selected.ingredients.filter(ing => ing.amount >= 1);
 
     // const isLight = !!(((contain.filter(ing => ing.name === 'Alface')
     //   .length >= 1)
@@ -66,7 +61,7 @@ class Edit extends Component {
 
     let total = 0.00;
 
-    if ((contain.length >= 1) && (item.promotions.isLight === true)) {
+    if ((contain.length >= 1) && (selected.promotions.isLight === true)) {
       total = contain.reduce((previousValue, currentValue) => (
         { price: (previousValue.price) + (currentValue.price) }
       ));
@@ -96,7 +91,7 @@ class Edit extends Component {
 
         <Burguer.Container>
           <Burguer.Header>
-            <Burguer.Name>{item.name}</Burguer.Name>
+            <Burguer.Name>{selected.name}</Burguer.Name>
           </Burguer.Header>
 
           {(contain.length >= 1) && contain.map(ing => (
@@ -107,13 +102,13 @@ class Edit extends Component {
 
               <TouchableOpacity
                 onPress={(ing.amount > 1)
-                  ? () => { remOne(ing); }
+                  ? () => { remIng(ing); }
                   : () => {
                     Alert.alert(
                       'Hey!',
                       'Você deseja mesmo remover este ingrediente?',
                       [
-                        { text: 'Sim!', onPress: () => remOne(ing) },
+                        { text: 'Sim!', onPress: () => remIng(ing) },
                         { text: 'Não' },
                       ],
                       { cancelable: true },
@@ -129,7 +124,7 @@ class Edit extends Component {
               </IngPrice>
 
               <TouchableOpacity
-                onPress={() => { addOne(ing); }}
+                onPress={() => { addIng(ing); }}
               >
                 <FontAwesome name="plus" size={15} color={colors.white} />
               </TouchableOpacity>
@@ -153,19 +148,19 @@ class Edit extends Component {
             <Burguer.Footer style={{ justifyContent: 'space-between' }}>
 
 
-              {(item.promotions.isLight) && (
+              {(selected.promotions.isLight) && (
               <Promotion style={{ color: colors.green }}>
                 Light!
               </Promotion>
               )}
 
-              {(item.promotions.muchMeat) && (
+              {(selected.promotions.muchMeat) && (
               <Promotion style={{ color: colors.red }}>
                 Muita carne!
               </Promotion>
               )}
 
-              {(item.promotions.muchCheese) && (
+              {(selected.promotions.muchCheese) && (
               <Promotion style={{ color: colors.yellow }}>
                 Muito queijo!
               </Promotion>
@@ -187,9 +182,9 @@ class Edit extends Component {
         <Finish
           onPress={(contain.length >= 1)
             ? () => {
-              remove(item);
+              remove(selected);
               navigate('Basket');
-              request({ item });
+              endEdit({ item: selected });
             }
             : () => {
               Alert.alert(
@@ -221,7 +216,7 @@ class Edit extends Component {
               >
                 <Option
                   onPress={() => {
-                    addOne(ing);
+                    addIng(ing);
                     this.toggleModal();
                   }}
                 >
@@ -245,37 +240,37 @@ class Edit extends Component {
 }
 
 Edit.propTypes = {
-  item: PropTypes.objectOf(PropTypes.oneOfType([
+  selected: PropTypes.objectOf(PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number,
     PropTypes.array,
     PropTypes.object,
   ])),
-  addOne: PropTypes.func,
-  remOne: PropTypes.func,
+  addIng: PropTypes.func,
+  remIng: PropTypes.func,
   remove: PropTypes.func,
-  request: PropTypes.func,
+  endEdit: PropTypes.func,
 };
 
 Edit.defaultProps = {
-  item: {},
-  addOne: () => {},
-  remOne: () => {},
+  selected: {},
+  addIng: () => {},
+  remIng: () => {},
   remove: () => {},
-  request: () => {},
+  endEdit: () => {},
 };
 
 const mapStateToProps = state => ({
-  item: state.items.item,
-  ingredients: state.ingredients,
+  selected: state.selected,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(
   {
-    addOne: ItemsActions.addOne,
-    remOne: ItemsActions.remOne,
-    remove: BasketActions.rem,
-    request: CombosActions.addRequest,
+    addIng: Creators.addIng,
+    remIng: Creators.remIng,
+
+    remove: Creators.rem,
+    endEdit: Creators.endEdit,
   },
   dispatch,
 );

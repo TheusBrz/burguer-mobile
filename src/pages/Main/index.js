@@ -6,8 +6,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Creators as CombosActions } from '~/store/ducks/combos';
-import { Creators as BasketActions } from '~/store/ducks/basket';
+import { Creators } from '~/store/ducks';
 
 import { colors } from '~/styles';
 import {
@@ -23,7 +22,7 @@ class Main extends Component {
 
   render() {
     const {
-      combos, request, basket, edit,
+      combos, add, basket, edit,
     } = this.props;
 
     return (
@@ -54,7 +53,7 @@ class Main extends Component {
               <Option
                 onPress={((name) === 'Monte do seu jeito!')
                   ? () => { edit(item); }
-                  : () => { request({ item }); }}
+                  : () => { add({ item }); }}
               >
                 <OptionText>{item.name}</OptionText>
               </Option>
@@ -79,26 +78,26 @@ class Main extends Component {
 Main.propTypes = {
   combos: PropTypes.arrayOf(PropTypes.object),
   basket: PropTypes.arrayOf(PropTypes.object),
-  request: PropTypes.func,
+  add: PropTypes.func,
   edit: PropTypes.func,
 };
 
 Main.defaultProps = {
   combos: [],
   basket: [],
-  request: () => {},
+  add: () => {},
   edit: () => {},
 };
 
 const mapStateToProps = state => ({
-  combos: state.combos.data,
-  basket: state.basket.items,
+  combos: state.data,
+  basket: state.basket,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(
   {
-    request: CombosActions.addRequest,
-    edit: BasketActions.edit,
+    add: Creators.add,
+    edit: Creators.edit,
   },
   dispatch,
 );

@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import { StatusBar } from 'react-native';
 import PropTypes from 'prop-types';
 
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { Creators } from '~/store/ducks';
+
 import { PacmanIndicator } from 'react-native-indicators';
 
 import { colors } from '~/styles';
@@ -14,10 +18,9 @@ import { Loading, Logo, Version } from './styles';
  */
 class Start extends Component {
   componentDidMount() {
+    const { load } = this.props;
     setTimeout(() => {
-      const { navigation } = this.props;
-
-      navigation.navigate('Main');
+      load();
     }, 2000);
   }
 
@@ -43,11 +46,25 @@ class Start extends Component {
 }
 
 Start.propTypes = {
-  navigation: PropTypes.shape({
-    navigate: PropTypes.func,
-  }).isRequired,
+  load: PropTypes.func,
 };
 
-Start.defaultProps = {};
+Start.defaultProps = {
+  load: () => {},
+};
 
-export default Start;
+const mapStateToProps = state => ({
+  state,
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators(
+  {
+    load: Creators.load,
+  },
+  dispatch,
+);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Start);

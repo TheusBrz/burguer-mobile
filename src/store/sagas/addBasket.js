@@ -1,21 +1,23 @@
+import api from '~/services/api';
 import {
-  put,
+  call, put,
 } from 'redux-saga/effects';
-
-import { Creators as BasketActions } from '~/store/ducks/basket';
-
 import moment from 'moment';
 import md5 from 'react-native-md5';
-import { navigate } from '~/services/navigation';
 
+import { Creators } from '~/store/ducks';
+import { navigate } from '~/services/navigation';
 
 export function* addBasket(action) {
   const {
-    id, name, ingredients, promotions,
-  } = action.payload.item;
+    item,
+  } = action.payload;
+
   const now = moment();
 
-  const contain = ingredients.filter(ing => ing.amount >= 1);
+  const { data } = yield call(api.get, `/combo/${parseInt(item.id, 10)}`);
+
+  const contain = data.ingredients.filter(ing => ing.amount >= 1);
 
   const isLight = !!(((contain.filter(ing => ing.name === 'Alface')
     .length >= 1)
@@ -36,14 +38,14 @@ export function* addBasket(action) {
   }
 
   const newItem = {
-    id: md5.hex_md5(`${id}|${name}|${now}`),
-    name,
-    ingredients,
+    id: md5.hex_md5(`${item.id}|${item.name}|${now}`),
+    name: data.name,
+    ingredients: data.ingredients,
     total: total.price,
-    promotions,
+    promotions: data.promotions,
   };
 
-  yield put(BasketActions.add(newItem));
-
+  yield put(Creators.addSuc(newItem));
+  console.tron.log(newItem);
   yield navigate('Basket');
 }

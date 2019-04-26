@@ -7,7 +7,7 @@ import { navigate } from '~/services/navigation';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Creators as BasketActions } from '~/store/ducks/basket';
+import { Creators } from '~/store/ducks';
 
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 // // import MaterialIcon from 'react-native-vector-icons/MaterialIcon';
@@ -68,7 +68,7 @@ class Basket extends Component {
                   <Burguer.Name>{item.name}</Burguer.Name>
 
                   <Burguer.Actions
-                    onPress={() => edit(item)}
+                    onPress={() => { edit(item); console.tron.log(item); navigate('Edit'); }}
                   >
                     <FontAwesome
                       name="pencil"
@@ -185,13 +185,13 @@ Basket.defaultProps = {
 };
 
 const mapStateToProps = state => ({
-  basket: state.basket.items,
+  basket: state.basket,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(
   {
-    remove: BasketActions.rem,
-    edit: BasketActions.edit,
+    remove: Creators.rem,
+    edit: Creators.edit,
   },
   dispatch,
 );
