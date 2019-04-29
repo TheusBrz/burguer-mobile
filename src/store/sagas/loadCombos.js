@@ -7,7 +7,7 @@ import { Creators } from '~/store/ducks';
 import { navigate } from '~/services/navigation';
 
 export function* loadCombos() {
-  const { data } = yield call(api.get, '/combo/');
+  const { data } = yield call(api.get, '/combos/');
 
   yield put(Creators.success({ array: data }));
 

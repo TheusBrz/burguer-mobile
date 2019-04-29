@@ -45,7 +45,11 @@ export function* addBasket(action) {
     promotions: data.promotions,
   };
 
-  yield put(Creators.addSuc(newItem));
-  console.tron.log(newItem);
-  yield navigate('Basket');
+  if (newItem.name === 'Monte do seu jeito!') {
+    yield put(Creators.edit(newItem));
+    yield navigate('Edit');
+  } else {
+    yield put(Creators.addSuc(newItem));
+    yield navigate('Basket');
+  }
 }

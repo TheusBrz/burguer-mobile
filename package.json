@@ -45,10 +45,7 @@
     "jest": "^24.7.1",
     "metro-react-native-babel-preset": "^0.53.1",
     "react-dom": "^16.8.6",
-    "react-test-renderer": "16.8.3",
     "reactotron-react-native": "^3.2.2",
-    "reactotron-redux": "^3.1.0",
-    "redux-saga-test-plan": "^3.7.0",
-    "tape": "^4.10.1"
+    "reactotron-redux": "^3.1.0"
   }
 }

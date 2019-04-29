@@ -30,8 +30,7 @@ import {
 } from '~/styles/general';
 
 class Basket extends Component {
-  componentDidMount() {
-  }
+  componentDidMount() {}
 
   render() {
     const {
@@ -68,7 +67,7 @@ class Basket extends Component {
                   <Burguer.Name>{item.name}</Burguer.Name>
 
                   <Burguer.Actions
-                    onPress={() => { edit(item); console.tron.log(item); navigate('Edit'); }}
+                    onPress={() => { edit(item); navigate('Edit'); }}
                   >
                     <FontAwesome
                       name="pencil"

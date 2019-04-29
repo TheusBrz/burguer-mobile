@@ -52,13 +52,6 @@ class Edit extends Component {
     const more = selected.ingredients.filter(ing => ing.amount < 1);
     const contain = selected.ingredients.filter(ing => ing.amount >= 1);
 
-    // const isLight = !!(((contain.filter(ing => ing.name === 'Alface')
-    //   .length >= 1)
-    //   && (contain.filter(ing => ing.name === 'Bacon').length < 1)));
-    // const muchMeat = (contain.filter(ing => ing.name === 'Hambúrguer de carne').length >= 3);
-    // const muchCheese = (contain.filter(ing => ing.name === 'Queijo').length >= 3);
-
-
     let total = 0.00;
 
     if ((contain.length >= 1) && (selected.promotions.isLight === true)) {

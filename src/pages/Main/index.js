@@ -22,7 +22,7 @@ class Main extends Component {
 
   render() {
     const {
-      combos, add, basket, edit,
+      combos, add, basket,
     } = this.props;
 
     return (
@@ -47,18 +47,14 @@ class Main extends Component {
               </Title>
             </Header>
           )}
-          renderItem={({ item }) => {
-            const { name } = item;
-            return (
-              <Option
-                onPress={((name) === 'Monte do seu jeito!')
-                  ? () => { edit(item); }
-                  : () => { add({ item }); }}
-              >
-                <OptionText>{item.name}</OptionText>
-              </Option>
-            );
-          }}
+          renderItem={({ item }) => (
+            <Option
+              onPress={() => { add({ item }); }}
+            >
+              <OptionText>{item.name}</OptionText>
+            </Option>
+          )
+          }
           ItemSeparatorComponent={() => <Separator />}
         />
 
@@ -79,14 +75,12 @@ Main.propTypes = {
   combos: PropTypes.arrayOf(PropTypes.object),
   basket: PropTypes.arrayOf(PropTypes.object),
   add: PropTypes.func,
-  edit: PropTypes.func,
 };
 
 Main.defaultProps = {
   combos: [],
   basket: [],
   add: () => {},
-  edit: () => {},
 };
 
 const mapStateToProps = state => ({

@@ -5,9 +5,9 @@ import md5 from 'react-native-md5';
 import { addBasket } from '~/store/sagas/addBasket';
 import { Creators } from '~/store/ducks';
 
-
 const id = 1;
 const name = 'X-Bacon';
+const item = { id, name };
 
 const now = moment();
 
@@ -75,6 +75,7 @@ describe('addBasket Saga', () => {
         },
       },
       addBasket,
+      item,
       Creators.add({ id, name }),
     ).toPromise();
 
