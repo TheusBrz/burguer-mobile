@@ -13,17 +13,20 @@ Para executar o aplicativo pelo client, basta rodar os comandos:
 $ git clone https://github.com/TheusBrz/native-burguer.git
 `
 
+
 Acesse a pasta clonada através do terminal e execute o seguinte comando para instalar as dependências:
 
 `
 $ yarn install 
 `
 
+
 Agora vamos linkar algumas dependências, execute: 
 
 `
 $ react-native link
 `
+
 
 Para executar na plataforma desejada, execute
 
